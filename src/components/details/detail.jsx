@@ -1,67 +1,72 @@
-import {doc, getDoc} from "firebase/firestore";
-import {db} from "../../utils/firebase.utils";
+import React, {useEffect} from "react";
+import {observer} from "mobx-react";
 import {useParams} from "react-router-dom";
-import {useState, useEffect} from "react";
-import "./detail.scss";
+import {useNavigate} from "react-router-dom";
 
-const CarDetails = () => {
+import carStore from "../../utils/carStore";
+import "./detail.scss";
+import AddCar from "../addCar/addCar";
+
+const CarDetails = observer(() => {
   const {id} = useParams();
-  const [car, setCar] = useState(null);
-  const [filteredModels, setFilteredModels] = useState([]);
-  const [sortOption, setSortOption] = useState("marke");
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchCarData = async () => {
-      try {
-        const carDocRef = doc(db, "Cars", id);
-        const carDocSnapshot = await getDoc(carDocRef);
-        if (carDocSnapshot.exists()) {
-          setCar(carDocSnapshot.data());
-          setFilteredModels(carDocSnapshot.data().VehicleModel);
-        } else {
-          console.log("Car not found");
-        }
-      } catch (error) {
-        console.log("Error fetching car data:", error);
-      }
-    };
-
-    fetchCarData();
-  }, [id]);
+    carStore.fetchCarData();
+  }, []);
 
   const handleFilter = (event) => {
-    const query = event.target.value.toLowerCase();
-    const filteredModels = car.VehicleModel.filter(
-      (model) =>
-        model.marke.toLowerCase().includes(query) ||
-        model.model.toLowerCase().includes(query) ||
-        model.classe.toLowerCase().includes(query)
-    );
-    setFilteredModels(filteredModels);
+    carStore.setSearchQuery(event.target.value);
   };
 
   const handleSort = (event) => {
-    const option = event.target.value;
-    setSortOption(option);
-    const sortedModels = [...filteredModels].sort((a, b) =>
-      a[option].localeCompare(b[option])
-    );
-    setFilteredModels(sortedModels);
+    carStore.setSortOption(event.target.value);
   };
+
+  const car = carStore.filteredCars.find((car) => car.id === id);
+
+  useEffect(() => {
+    if (!car) {
+      navigate("/");
+    }
+  }, [car, navigate]);
 
   if (!car) {
     return <div className="loading">Loading...</div>;
   }
 
+  const {title, VehicleModel} = car;
+
+  const sortedModels = VehicleModel.slice().sort((a, b) => {
+    if (carStore.sortOption === "model") {
+      return a.model.localeCompare(b.model);
+    } else if (carStore.sortOption === "classe") {
+      return a.classe.localeCompare(b.classe);
+    } else {
+      return 0;
+    }
+  });
+
+  const filteredModels = sortedModels.filter((model) => {
+    const lowerCaseQuery = carStore.searchQuery.toLowerCase();
+    return (
+      model.marke.toLowerCase().includes(lowerCaseQuery) ||
+      model.model.toLowerCase().includes(lowerCaseQuery) ||
+      model.classe.toLowerCase().includes(lowerCaseQuery)
+    );
+  });
+
   return (
     <div className="div-container">
-      <h1>{car.title}</h1>
+      <h1>{title}</h1>
       <input
         type="text"
         placeholder="Filter models..."
         onChange={handleFilter}
       />
-      <select value={sortOption} onChange={handleSort}>
+      <AddCar />
+      <select value={carStore.sortOption} onChange={handleSort}>
+        <option value="">Sort by</option>
         <option value="model">Sort by Model</option>
         <option value="classe">Sort by Classe</option>
       </select>
@@ -76,6 +81,6 @@ const CarDetails = () => {
       </div>
     </div>
   );
-};
+});
 
 export default CarDetails;

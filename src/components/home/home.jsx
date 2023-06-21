@@ -1,70 +1,39 @@
-import React, {useEffect, useState, useRef} from "react";
-import {collection, getDocs} from "firebase/firestore";
-import {db} from "../../utils/firebase.utils";
+// Home.js
+import React, {useEffect} from "react";
+import {observer} from "mobx-react";
+import {useNavigate} from "react-router-dom";
 import CarSearchBox from "../car-search-box/car-search-box";
 import "./home.scss";
-import {useNavigate} from "react-router-dom";
+import carStore from "../../utils/carStore";
+import authStore from "../../utils/authStore";
 
-const Home = () => {
-  const [carData, setCarData] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [filteredCars, setFilteredCars] = useState([]);
-  const [currentSlot, setCurrentSlot] = useState(0);
-  const carListRef = useRef(null);
+const Home = observer(() => {
+  const {
+    filteredCars,
+    searchQuery,
+    setCurrentSlot,
+    handleSearchChange,
+    handleSlideLeft,
+    handleSlideRight,
+    fetchCarData,
+    fetchCarDetails,
+    currentSlot,
+  } = carStore;
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchCarData = async () => {
-      try {
-        const carCollectionRef = collection(db, "Cars");
-        const querySnapshot = await getDocs(carCollectionRef);
-        const cars = querySnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setCarData(cars);
-      } catch (error) {
-        console.log("Error fetching car data:", error);
-      }
-    };
-
     fetchCarData();
   }, []);
 
   useEffect(() => {
-    const filteredCars = carData.filter((car) => {
-      const lowerCaseQuery = searchQuery.toLowerCase();
-      const titleMatch = car.title.toLowerCase().includes(lowerCaseQuery);
-      const modelMatch = car.VehicleModel.some(
-        (model) =>
-          model.marke.toLowerCase().includes(lowerCaseQuery) ||
-          model.model.toLowerCase().includes(lowerCaseQuery) ||
-          model.classe.toLowerCase().includes(lowerCaseQuery)
-      );
-      return titleMatch || modelMatch;
-    });
-    setFilteredCars(filteredCars);
-    setCurrentSlot(0);
-  }, [searchQuery, carData]);
-
-  const handleSearchChange = (event) => {
-    setSearchQuery(event.target.value);
-  };
-  const navigate = useNavigate();
-  const openCarCard = (id) => {
-    navigate(`/car/${id}`);
-  };
-  const handleSlideLeft = () => {
-    if (currentSlot === 0) {
-      return;
+    if (!authStore.isLoggedIn) {
+      navigate("/");
     }
-    setCurrentSlot((prevSlot) => prevSlot - 1);
-  };
+  }, [authStore.isLoggedIn, navigate]);
 
-  const handleSlideRight = () => {
-    if (currentSlot === filteredCars.length - 1) {
-      return;
-    }
-    setCurrentSlot((prevSlot) => prevSlot + 1);
+  const openCarCard = async (car) => {
+    await fetchCarDetails(car.id);
+    navigate(`/car/${car.id}`);
   };
 
   return (
@@ -77,30 +46,34 @@ const Home = () => {
       <div className="car-list-container">
         <div
           className="car-list"
-          ref={carListRef}
           style={{
             transform: `translateX(-${currentSlot * 20}%)`,
-            width: `${filteredCars.length * 100}%`,
+            width: filteredCars ? `${filteredCars.length * 100}%` : "100%",
           }}
         >
-          {filteredCars.map((car, index) => (
-            <div
-              className="car-card"
-              key={car.id}
-              onClick={() => openCarCard(car.id)}
-            >
-              <h2 className="car-card-title">{car.title}</h2>
-              <div className="model-details">
-                {[...Array(car.VehicleModel.length)].map((_, modelIndex) => (
-                  <div className="model-box" key={modelIndex}>
-                    <h3>{car.VehicleModel[modelIndex].marke}</h3>
-                    <p>Model: {car.VehicleModel[modelIndex].model}</p>
-                    <p>Classe: {car.VehicleModel[modelIndex].classe}</p>
-                  </div>
-                ))}
+          {filteredCars && filteredCars.length > 0 ? (
+            filteredCars.map((car) => (
+              <div
+                className="car-card"
+                key={car.id}
+                onClick={() => openCarCard(car)}
+              >
+                <h2 className="car-card-title">{car.title}</h2>
+                <div className="model-details">
+                  {car.VehicleModel &&
+                    car.VehicleModel.map((model, modelIndex) => (
+                      <div className="model-box" key={modelIndex}>
+                        <h3>{model.marke}</h3>
+                        <p>Model: {model.model}</p>
+                        <p>Classe: {model.classe}</p>
+                      </div>
+                    ))}
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            <p>No cars found</p>
+          )}
         </div>
       </div>
       <div className="slider-container">
@@ -114,6 +87,6 @@ const Home = () => {
       </div>
     </div>
   );
-};
+});
 
 export default Home;

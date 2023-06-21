@@ -33,7 +33,7 @@
 
   align-items: center;
   transition: transform 0.3s;
-  justify-content: start;
+  justify-content: flex-start;
   overflow-x: hidden;
   scroll-snap-type: x mandatory;
 }

@@ -1,12 +1,12 @@
 import {useState} from "react";
-
 import "./sign.up.scss";
-
 import {
   createAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth,
 } from "../../../utils/firebase.utils";
 import SignIn from "../sign.in";
+import {observer} from "mobx-react-lite";
+import authStore from "../../../utils/authStore";
 
 const defaultFormFields = {
   displayName: "",
@@ -32,7 +32,7 @@ const SignUp = () => {
     event.preventDefault();
 
     if (password !== confirmPassword) {
-      alert("please confirm password again");
+      alert("Please confirm password again");
       return;
     }
 
@@ -40,6 +40,7 @@ const SignUp = () => {
       const {user} = await createAuthUserWithEmailAndPassword(email, password);
 
       await createUserDocumentFromAuth(user, {displayName});
+      authStore.login(email, password); // Log in the user after successful sign up
     } catch (error) {
       if (error.code === "auth/email-already-in-use") {
         alert("This email already exists");
@@ -60,7 +61,7 @@ const SignUp = () => {
         <div className="sing-up-container">
           <h2>Create new account</h2>
           <span className="title-singup">
-            Sing up with your email and password
+            Sign up with your email and password
           </span>
           <form onSubmit={handleSubmit}>
             <input
@@ -117,4 +118,4 @@ const SignUp = () => {
   } else if (isVisible === false) return <SignIn />;
 };
 
-export default SignUp;
+export default observer(SignUp);

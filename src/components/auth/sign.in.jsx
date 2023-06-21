@@ -5,20 +5,22 @@ import {
   signInWithGooglePopup,
 } from "../../utils/firebase.utils";
 import SignUp from "./signUp/sign.up";
-
 import {useNavigate} from "react-router-dom";
+import {observer} from "mobx-react-lite";
+import authStore from "../../utils/authStore";
 
-const defaultFormFieldssignIn = {
+const defaultFormFieldsSignIn = {
   email: "",
   password: "",
 };
 
 const SignIn = () => {
-  const [formFields, setFormFields] = useState(defaultFormFieldssignIn);
+  const [formFields, setFormFields] = useState(defaultFormFieldsSignIn);
   const {email, password} = formFields;
+  const navigate = useNavigate();
 
   const resetFormFields = () => {
-    setFormFields(defaultFormFieldssignIn);
+    setFormFields(defaultFormFieldsSignIn);
   };
 
   const signInWithGoogle = async () => {
@@ -30,7 +32,6 @@ const SignIn = () => {
   const handleClick = () => {
     setIsVisible(true);
   };
-  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -49,6 +50,7 @@ const SignIn = () => {
 
     setFormFields({...formFields, [name]: value});
   };
+
   if (isVisible === false) {
     return (
       <div className="auth-container">
@@ -90,7 +92,7 @@ const SignIn = () => {
               </button>
               <div className="acc-new">
                 <span>
-                  If you doesn't have an account make new one<br></br>
+                  If you don't have an account, create a new one<br></br>
                   <span onClick={handleClick} className="link">
                     Make new account
                   </span>
@@ -104,4 +106,4 @@ const SignIn = () => {
   } else if (isVisible === true) return <SignUp />;
 };
 
-export default SignIn;
+export default observer(SignIn);
