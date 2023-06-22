@@ -11,19 +11,29 @@ class AuthStore {
   }
 
   checkUserAuth() {
+    const persistedState = JSON.parse(localStorage.getItem("authState"));
+
+    if (persistedState) {
+      this.isLoggedIn = persistedState.isLoggedIn;
+      this.currentUser = persistedState.currentUser;
+    }
+
     auth.onAuthStateChanged((user) => {
       if (user) {
         this.isLoggedIn = true;
         this.currentUser = user;
+        this.persistState();
       } else {
         this.isLoggedIn = false;
         this.currentUser = null;
+        this.persistState();
       }
     });
   }
 
   async login(email, password) {
     await auth.signInWithEmailAndPassword(email, password);
+    this.persistState();
   }
 
   async signUp(displayName, email, password) {
@@ -31,10 +41,23 @@ class AuthStore {
     await user.updateProfile({
       displayName: displayName,
     });
+    this.persistState();
   }
 
   async logout() {
     await auth.signOut();
+    this.isLoggedIn = false;
+    this.currentUser = null;
+    this.persistState();
+  }
+
+  persistState() {
+    const stateToPersist = {
+      isLoggedIn: this.isLoggedIn,
+      currentUser: this.currentUser,
+    };
+
+    localStorage.setItem("authState", JSON.stringify(stateToPersist));
   }
 }
 

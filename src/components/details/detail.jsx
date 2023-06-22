@@ -6,6 +6,7 @@ import {useNavigate} from "react-router-dom";
 import carStore from "../../utils/carStore";
 import "./detail.scss";
 import AddCar from "../addCar/addCar";
+import EditCar from "../editCar/editCar";
 
 const CarDetails = observer(() => {
   const {id} = useParams();
@@ -17,6 +18,7 @@ const CarDetails = observer(() => {
 
   const handleFilter = (event) => {
     carStore.setSearchQuery(event.target.value);
+    event.preventDefault();
   };
 
   const handleSort = (event) => {
@@ -30,6 +32,12 @@ const CarDetails = observer(() => {
       navigate("/");
     }
   }, [car, navigate]);
+
+  const handleDelete = (carId) => {
+    const brand = car.title.toLowerCase();
+    carStore.deleteCar(brand, carId);
+    console.log(brand);
+  };
 
   if (!car) {
     return <div className="loading">Loading...</div>;
@@ -58,7 +66,7 @@ const CarDetails = observer(() => {
 
   return (
     <div className="div-container">
-      <h1>{title}</h1>
+      {title && <h1>{title}</h1>}
       <input
         type="text"
         placeholder="Filter models..."
@@ -76,6 +84,13 @@ const CarDetails = observer(() => {
             <h3>{model.marke}</h3>
             <p>Model: {model.model}</p>
             <p>Classe: {model.classe}</p>
+            <button onClick={() => handleDelete(model.id)}>Delete</button>
+
+            <EditCar
+              car={model}
+              brand={car.title.toLowerCase()}
+              onSave={carStore.updateCar}
+            />
           </div>
         ))}
       </div>

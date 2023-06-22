@@ -103,10 +103,18 @@
 .slider-container {
   display: flex;
   justify-content: space-between;
-  width: 70px;
-  height: 40px;
+  width: 100px;
+  height: 50px;
   display: flex;
 
   margin-left: auto;
   margin-right: auto;
+}
+.currentSlot {
+  margin: 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column-reverse;
+  font-size: large;
+  font-weight: bold;
 }

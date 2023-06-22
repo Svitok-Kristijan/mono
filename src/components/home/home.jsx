@@ -1,4 +1,3 @@
-// Home.js
 import React, {useEffect} from "react";
 import {observer} from "mobx-react";
 import {useNavigate} from "react-router-dom";
@@ -6,7 +5,8 @@ import CarSearchBox from "../car-search-box/car-search-box";
 import "./home.scss";
 import carStore from "../../utils/carStore";
 import authStore from "../../utils/authStore";
-
+//import {addCollectionAndDocuments} from "../../utils/firebase.utils";
+//import CAR_DATA from "../../car-data";
 const Home = observer(() => {
   const {
     filteredCars,
@@ -33,7 +33,7 @@ const Home = observer(() => {
 
   const openCarCard = async (car) => {
     await fetchCarDetails(car.id);
-    navigate(`/car/${car.id}`);
+    navigate(`/home/car/${car.id}`);
   };
 
   return (
@@ -80,7 +80,7 @@ const Home = observer(() => {
         <button className="slider-button-left" onClick={handleSlideLeft}>
           &lt;
         </button>
-        _
+        <p className="currentSlot">{currentSlot + 1}</p>
         <button className="slider-button-right" onClick={handleSlideRight}>
           &gt;
         </button>
