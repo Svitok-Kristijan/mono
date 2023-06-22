@@ -1,5 +1,13 @@
 import {makeAutoObservable} from "mobx";
-import {auth} from "../utils/firebase.utils";
+
+import "firebase/auth";
+import {
+  createAuthUserWithEmailAndPassword,
+  signInAuthUserWithEmailAndPassword,
+  createUserDocumentFromAuth,
+  signOutUser,
+  onAuthStateChangedListener,
+} from "./firebase.utils";
 
 class AuthStore {
   isLoggedIn = false;
@@ -18,7 +26,7 @@ class AuthStore {
       this.currentUser = persistedState.currentUser;
     }
 
-    auth.onAuthStateChanged((user) => {
+    onAuthStateChangedListener((user) => {
       if (user) {
         this.isLoggedIn = true;
         this.currentUser = user;
@@ -32,20 +40,28 @@ class AuthStore {
   }
 
   async login(email, password) {
-    await auth.signInWithEmailAndPassword(email, password);
+    await signInAuthUserWithEmailAndPassword(email, password);
     this.persistState();
   }
 
-  async signUp(displayName, email, password) {
-    const {user} = await auth.createUserWithEmailAndPassword(email, password);
-    await user.updateProfile({
-      displayName: displayName,
-    });
-    this.persistState();
+  async signUpNew(displayName, email, password) {
+    const userCredential = await createAuthUserWithEmailAndPassword(
+      email,
+      password
+    );
+
+    if (userCredential && userCredential.user) {
+      const {user} = userCredential;
+      await createUserDocumentFromAuth(user, {displayName});
+
+      await user.updateProfile({
+        displayName: displayName,
+      });
+    }
   }
 
   async logout() {
-    await auth.signOut();
+    await signOutUser();
     this.isLoggedIn = false;
     this.currentUser = null;
     this.persistState();

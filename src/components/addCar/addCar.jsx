@@ -42,7 +42,7 @@ const AddCar = observer(() => {
   return (
     <div className="add-car-container">
       <div className={`add-car-form ${isFormVisible ? "" : "hidden"}`}>
-        <label htmlFor="brand">Brand</label>
+        <label htmlFor="brand"></label>
         <select id="brand" value={brand} onChange={handleBrandChange}>
           <option value="">Select Brand</option>
           <option value="BMW">BMW</option>
@@ -52,26 +52,29 @@ const AddCar = observer(() => {
           <option value="Volkswagen">Volkswagen</option>
         </select>
 
-        <label htmlFor="marke">Marke</label>
+        <label htmlFor="marke"></label>
         <input
           type="text"
           id="marke"
+          placeholder="Marke"
           value={marke}
           onChange={(e) => setMarke(e.target.value)}
         />
 
-        <label htmlFor="model">Model</label>
+        <label htmlFor="model"></label>
         <input
           type="text"
           id="model"
+          placeholder="Model"
           value={model}
           onChange={(e) => setModel(e.target.value)}
         />
 
-        <label htmlFor="classe">Classe</label>
+        <label htmlFor="classe"></label>
         <input
           type="text"
           id="classe"
+          placeholder="Classe"
           value={classe}
           onChange={(e) => setClasse(e.target.value)}
         />

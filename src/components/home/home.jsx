@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import {observer} from "mobx-react";
 import {useNavigate} from "react-router-dom";
-import CarSearchBox from "../car-search-box/car-search-box";
+
 import "./home.scss";
 import carStore from "../../utils/carStore";
 import authStore from "../../utils/authStore";
@@ -12,7 +12,7 @@ const Home = observer(() => {
     filteredCars,
     searchQuery,
     setCurrentSlot,
-    handleSearchChange,
+
     handleSlideLeft,
     handleSlideRight,
     fetchCarData,
@@ -38,11 +38,6 @@ const Home = observer(() => {
 
   return (
     <div className="home-container">
-      <CarSearchBox
-        value={searchQuery}
-        onChange={handleSearchChange}
-        className="car-search-box"
-      />
       <div className="car-list-container">
         <div
           className="car-list"

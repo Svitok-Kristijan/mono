@@ -1,0 +1,37 @@
+.form-container-succ {
+  position: absolute;
+  top: 80px;
+  z-index: 99;
+  width: 1100px;
+  height: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  background: rgb(239, 255, 238);
+  background: linear-gradient(
+    90deg,
+    rgba(239, 255, 238, 1) 0%,
+    rgba(236, 255, 230, 1) 15%,
+    rgba(202, 222, 197, 1) 50%,
+    rgba(184, 255, 174, 1) 100%
+  );
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px 400px 10px;
+  box-shadow: 5px 5px 10px 5px rgb(139, 145, 138);
+  .succ-form {
+    width: 75%;
+    height: 150px;
+    background-color: rgba(0, 0, 0, 0.343);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 400px 20px 400px;
+    box-shadow: 5px 5px 7px 5px rgb(184, 184, 184);
+    p {
+      font-size: 1.9em;
+      color: rgb(227, 227, 227);
+    }
+  }
+}

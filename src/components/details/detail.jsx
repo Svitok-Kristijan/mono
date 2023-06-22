@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import {observer} from "mobx-react";
 import {useParams} from "react-router-dom";
 import {useNavigate} from "react-router-dom";
-
+import authStore from "../../utils/authStore";
 import carStore from "../../utils/carStore";
 import "./detail.scss";
 import AddCar from "../addCar/addCar";
@@ -11,6 +11,11 @@ import EditCar from "../editCar/editCar";
 const CarDetails = observer(() => {
   const {id} = useParams();
   const navigate = useNavigate();
+  useEffect(() => {
+    if (!authStore.isLoggedIn) {
+      navigate("/");
+    }
+  }, [authStore.isLoggedIn, navigate]);
 
   useEffect(() => {
     carStore.fetchCarData();
@@ -18,7 +23,6 @@ const CarDetails = observer(() => {
 
   const handleFilter = (event) => {
     carStore.setSearchQuery(event.target.value);
-    event.preventDefault();
   };
 
   const handleSort = (event) => {
@@ -26,12 +30,6 @@ const CarDetails = observer(() => {
   };
 
   const car = carStore.filteredCars.find((car) => car.id === id);
-
-  useEffect(() => {
-    if (!car) {
-      navigate("/");
-    }
-  }, [car, navigate]);
 
   const handleDelete = (carId) => {
     const brand = car.title.toLowerCase();
@@ -69,8 +67,9 @@ const CarDetails = observer(() => {
       {title && <h1>{title}</h1>}
       <input
         type="text"
-        placeholder="Filter models..."
+        placeholder="Filter cars..."
         onChange={handleFilter}
+        className="input-search"
       />
       <AddCar />
       <select value={carStore.sortOption} onChange={handleSort}>
@@ -84,7 +83,9 @@ const CarDetails = observer(() => {
             <h3>{model.marke}</h3>
             <p>Model: {model.model}</p>
             <p>Classe: {model.classe}</p>
-            <button onClick={() => handleDelete(model.id)}>Delete</button>
+            <button className="btn-del" onClick={() => handleDelete(model.id)}>
+              Delete
+            </button>
 
             <EditCar
               car={model}

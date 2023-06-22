@@ -1,0 +1,126 @@
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 100px;
+
+  .signIn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 10px;
+    background-color: rgb(231, 233, 233);
+    width: 730px;
+    height: 530px;
+
+    box-shadow: 13px -7px 17px 23px rgba(153, 153, 153, 0.61);
+    border-radius: 300px 10px 450px;
+
+    h2 {
+      font-size: 33px;
+      margin-top: -40px;
+      text-shadow: 1px 1px 2px black;
+      transform: rotate(2deg);
+      transform: skewX(-10deg);
+    }
+    span {
+      font-size: 18px;
+      transform: rotate(2deg);
+      transform: skewX(-10deg);
+    }
+    .form-container {
+      display: flex;
+      text-align: center;
+      flex-direction: column;
+      margin-top: 50px;
+      align-items: center;
+
+      .input-email {
+        text-align: center;
+        margin-bottom: 40px;
+        border-radius: 30px;
+        font-size: 16px;
+        margin-left: 30px;
+        border: none;
+        border-bottom: 1px solid rgb(0, 0, 0);
+        transition: all 0.5s ease-in-out;
+        height: 30px;
+        width: 300px;
+        background-color: rgb(231, 233, 233);
+        &:focus {
+          outline: none;
+        }
+      }
+      .input-password {
+        text-align: center;
+        border: none;
+        border-radius: 30px;
+        margin-bottom: 20px;
+        margin-left: 30px;
+        font-size: 16px;
+        color: #fff;
+
+        border-bottom: 1px solid rgb(0, 0, 0);
+        transition: all 0.5s ease-in-out;
+        height: 30px;
+        background-color: rgb(231, 233, 233);
+        color: black;
+        width: 300px;
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+  }
+  .acc-new {
+    margin-top: 10px;
+    span {
+      font-size: 18px;
+
+      .link {
+        font-size: 25px;
+        outline: none;
+        background-color: transparent;
+        color: rgb(133, 121, 194);
+
+        margin-left: 10px;
+        cursor: pointer;
+        &:hover {
+          border-bottom: 1px solid rgb(133, 122, 220);
+        }
+      }
+    }
+  }
+}
+.btn-submit {
+  margin-bottom: 20px;
+  margin-left: 30px;
+  width: 100px;
+  height: 40px;
+  margin-right: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  transition: all 0.5s;
+  &:hover {
+    transform: scale(1.1);
+    background-color: rgb(241, 237, 231);
+  }
+}
+.btn-google {
+  margin-left: 30px;
+
+  width: 200px;
+  height: 40px;
+  border-radius: 5px;
+  cursor: pointer;
+  color: rgb(233, 236, 236);
+  background-color: rgba(36, 48, 215, 0.418);
+  border: none;
+  transition: all 0.5s;
+  &:hover {
+    transform: scale(1.1);
+  }
+}

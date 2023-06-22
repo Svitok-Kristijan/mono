@@ -2,17 +2,15 @@ import React, {useState} from "react";
 import "./editCar.scss";
 import carStore from "../../utils/carStore";
 import {observer} from "mobx-react";
-import {useNavigate} from "react-router-dom";
 
 const EditCar = ({car, brand, onSave}) => {
   const [editedCar, setEditedCar] = useState(car);
   const [isVisible, setIsVisible] = useState(false);
-  //const navigate = useNavigate();
+
   const handleSave = () => {
     onSave(editedCar, brand);
     setIsVisible(false);
     carStore.fetchCarData();
-    //navigate("/home");
   };
 
   const toggleVisibility = () => {

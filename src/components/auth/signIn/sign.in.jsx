@@ -1,13 +1,10 @@
 import {useState, useEffect} from "react";
 import "./sign.in.scss";
-import {
-  signInAuthUserWithEmailAndPassword,
-  signInWithGooglePopup,
-} from "../../utils/firebase.utils";
-import SignUp from "./signUp/sign.up";
+import {signInWithGooglePopup} from "../../../utils/firebase.utils";
+import SignUp from "../signUp/sign.up";
 import {useNavigate} from "react-router-dom";
 import {observer} from "mobx-react-lite";
-import authStore from "../../utils/authStore";
+import authStore from "../../../utils/authStore";
 
 const defaultFormFieldsSignIn = {
   email: "",
@@ -18,6 +15,7 @@ const SignIn = () => {
   const [formFields, setFormFields] = useState(defaultFormFieldsSignIn);
   const {email, password} = formFields;
   const navigate = useNavigate();
+  const {login} = authStore;
 
   const resetFormFields = () => {
     setFormFields(defaultFormFieldsSignIn);
@@ -36,8 +34,10 @@ const SignIn = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    authStore.login();
+
     try {
-      await signInAuthUserWithEmailAndPassword(email, password);
+      await authStore.login(email, password);
       resetFormFields();
       navigate("/home");
     } catch (error) {
@@ -93,6 +93,7 @@ const SignIn = () => {
               <div className="acc-new">
                 <span>
                   If you don't have an account, create a new one<br></br>
+                  <br></br>
                   <span onClick={handleClick} className="link">
                     Make new account
                   </span>

@@ -1,6 +1,6 @@
 .add-car-container {
   position: absolute;
-  right: 350px;
+  right: 250px;
   top: 220px;
   z-index: 98;
 
@@ -15,25 +15,43 @@
     background-color: rgb(230, 230, 230);
     border-radius: 10%;
     position: absolute;
-
+    text-align: center;
     left: 0;
-    width: 400px;
-    height: 300px;
+    width: 430px;
+    height: 400px;
+    box-shadow: 2px 2px 5px gray;
+    label {
+      margin-bottom: 30px;
+    }
+    #brand {
+      width: 250px;
+      margin-left: -20px;
+      height: 50px;
+      font-size: 18px;
+    }
     input {
       width: 300px;
       margin-bottom: 10px;
       padding: 5px;
       font-size: 16px;
+      margin-left: 26px;
     }
 
     button {
       width: 150px;
       padding: 10px;
       font-size: 16px;
-      background-color: #007bff;
+      background-color: #76b5f8;
       color: #fff;
       border: none;
-      cursor: pointer;
+      transition: all 0.6s;
+      margin-top: 10px;
+      border-radius: 5px;
+      &:hover {
+        background-color: #65adfa;
+        transform: scale(1.06);
+        cursor: pointer;
+      }
     }
   }
   .hide-form {
@@ -41,6 +59,19 @@
     margin-top: -30px;
     margin-left: 30px;
     z-index: 99;
+    width: 200px !important;
+    height: 27px;
+    justify-content: center;
+    font-size: 18px;
+    background-color: white;
+    border: none;
+    border-bottom: 1px solid gray;
+    border-left: 1px solid gray;
+    border-radius: 20px;
+    cursor: pointer;
+    &:hover {
+      background-color: rgb(246, 242, 248);
+    }
   }
 
   .add-car-form.hidden {

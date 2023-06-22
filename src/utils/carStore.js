@@ -1,13 +1,10 @@
-import {makeAutoObservable, runInAction, reaction, action} from "mobx";
+import {makeAutoObservable, runInAction, reaction} from "mobx";
 import {
   doc,
   getDoc,
   collection,
   getDocs,
-  addDoc,
   setDoc,
-  query,
-  where,
   deleteDoc,
   updateDoc,
 } from "firebase/firestore";
@@ -88,10 +85,6 @@ class CarStore {
 
   setCurrentSlot = (slot) => {
     this.currentSlot = slot;
-  };
-
-  handleSearchChange = (event) => {
-    this.setSearchQuery(event.target.value);
   };
 
   handleSlideLeft = () => {
