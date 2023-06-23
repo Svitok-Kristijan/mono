@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import {observer} from "mobx-react";
 import {useNavigate} from "react-router-dom";
-import CarPhoto from "../../assets/car.jpg";
+import CarPhoto from "../../assets/car.png";
 import "./home.scss";
 import carStore from "../../utils/carStore";
 import authStore from "../../utils/authStore";

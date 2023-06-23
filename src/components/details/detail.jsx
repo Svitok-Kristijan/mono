@@ -7,7 +7,7 @@ import carStore from "../../utils/carStore";
 import "./detail.scss";
 import AddCar from "../addCar/addCar";
 import EditCar from "../editCar/editCar";
-import BackCarPhoto from "../../assets/car-another.jpg";
+import BackCarPhoto from "../../assets/car-another.png";
 
 const CarDetails = observer(() => {
   const {id} = useParams();
