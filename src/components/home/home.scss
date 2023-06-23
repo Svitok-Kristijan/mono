@@ -1,6 +1,18 @@
 .home-container {
   text-align: center;
   padding: 20px;
+
+  .background-car {
+    background-size: cover;
+    width: 203vh;
+    height: 105vh;
+    position: absolute;
+    opacity: 0.9;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    z-index: -1;
+  }
 }
 
 .home-heading {
@@ -59,6 +71,7 @@
     transform: scale(0.95);
     background-color: rgb(150, 150, 150);
     cursor: pointer;
+    opacity: 0.9;
     .car-card-title {
       color: white;
       transform: scale(1.2);
@@ -106,9 +119,15 @@
   width: 100px;
   height: 50px;
   display: flex;
-
+  z-index: 99;
   margin-left: auto;
   margin-right: auto;
+  .slider-button-right {
+    cursor: pointer;
+  }
+  .slider-button-left {
+    cursor: pointer;
+  }
 }
 .currentSlot {
   margin: 20px;
@@ -117,4 +136,27 @@
   flex-direction: column-reverse;
   font-size: large;
   font-weight: bold;
+  color: white;
+}
+@media (max-width: 668px) {
+  .car-card {
+    width: 70% !important;
+    height: 700px !important;
+    margin-top: 100px !important;
+    z-index: 1 !important;
+  }
+  .model-details {
+    width: 80% !important;
+    margin-left: 40px !important;
+  }
+  .model-box {
+    width: 100px !important;
+    height: 145px !important;
+  }
+  p {
+    font-size: 14px !important;
+  }
+  .background-car {
+    width: 430px !important;
+  }
 }

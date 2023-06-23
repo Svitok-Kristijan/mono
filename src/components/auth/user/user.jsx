@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import "./user.scss";
-import UserPng from "../../../assets/user.png";
+import UserPng from "../../../assets/user-n.png";
 import authStore from "../../../utils/authStore";
 
 const UserForm = () => {

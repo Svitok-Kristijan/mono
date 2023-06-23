@@ -83,3 +83,15 @@
     }
   }
 }
+@media (max-width: 668px) {
+  .sing-up-container {
+    width: 900px !important;
+    height: 800px !important;
+    border-radius: 30px 350px 30px !important;
+
+    h2 {
+      margin-top: 150px !important;
+      font-size: 26px !important;
+    }
+  }
+}

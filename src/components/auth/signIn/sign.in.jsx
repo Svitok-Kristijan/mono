@@ -22,7 +22,8 @@ const SignIn = () => {
   };
 
   const signInWithGoogle = async () => {
-    await signInWithGooglePopup();
+    await authStore.signInWithGoogle();
+    navigate("/home");
   };
 
   const [isVisible, setIsVisible] = useState(false);

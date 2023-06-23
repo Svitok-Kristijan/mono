@@ -124,3 +124,33 @@
     transform: scale(1.1);
   }
 }
+@media (max-width: 668px) {
+  .signIn-container {
+    width: 300px;
+    height: 800px !important;
+    height: auto;
+    border-radius: 10px;
+    h2 {
+      font-size: 26px !important;
+    }
+    span {
+      font-size: 16px;
+    }
+  }
+
+  .input-email,
+  .input-password {
+    width: 70%;
+  }
+
+  .btn-submit,
+  .btn-google {
+    width: 50%;
+  }
+
+  .acc-new {
+    span {
+      font-size: 16px !important;
+    }
+  }
+}

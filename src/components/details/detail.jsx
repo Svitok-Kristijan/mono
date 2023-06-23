@@ -7,6 +7,7 @@ import carStore from "../../utils/carStore";
 import "./detail.scss";
 import AddCar from "../addCar/addCar";
 import EditCar from "../editCar/editCar";
+import BackCarPhoto from "../../assets/car-another.jpg";
 
 const CarDetails = observer(() => {
   const {id} = useParams();
@@ -34,7 +35,6 @@ const CarDetails = observer(() => {
   const handleDelete = (carId) => {
     const brand = car.title.toLowerCase();
     carStore.deleteCar(brand, carId);
-    console.log(brand);
   };
 
   if (!car) {
@@ -64,6 +64,7 @@ const CarDetails = observer(() => {
 
   return (
     <div className="div-container">
+      <img className="img-responsive" src={BackCarPhoto} alt="car" />
       {title && <h1>{title}</h1>}
       <input
         type="text"

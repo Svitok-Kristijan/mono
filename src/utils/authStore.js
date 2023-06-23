@@ -7,6 +7,7 @@ import {
   createUserDocumentFromAuth,
   signOutUser,
   onAuthStateChangedListener,
+  signInWithGooglePopup,
 } from "./firebase.utils";
 
 class AuthStore {
@@ -16,6 +17,10 @@ class AuthStore {
   constructor() {
     makeAutoObservable(this);
     this.checkUserAuth();
+  }
+
+  async signInWithGoogle() {
+    await signInWithGooglePopup();
   }
 
   checkUserAuth() {

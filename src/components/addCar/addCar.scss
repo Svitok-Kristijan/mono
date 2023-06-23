@@ -78,3 +78,17 @@
     display: none;
   }
 }
+@media (max-width: 668px) {
+  .hide-form {
+    position: absolute !important;
+    right: -140px !important;
+  }
+  select {
+    margin-left: -30px !important;
+    width: 140px !important;
+  }
+  .add-car-form {
+    position: absolute !important;
+    left: -170px !important;
+  }
+}
