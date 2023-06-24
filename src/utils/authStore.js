@@ -29,6 +29,10 @@ class AuthStore {
     if (persistedState) {
       this.isLoggedIn = persistedState.isLoggedIn;
       this.currentUser = persistedState.currentUser;
+    } else {
+      this.isLoggedIn = false;
+      this.currentUser = null;
+      this.persistState();
     }
 
     onAuthStateChangedListener((user) => {
