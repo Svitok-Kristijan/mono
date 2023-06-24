@@ -31,7 +31,7 @@ const SignUp = () => {
   const redirectHandle = () => {
     setTimeout(() => {
       navigate("/home");
-    }, 1600);
+    }, 1560);
   };
 
   const loginHandler = () => {

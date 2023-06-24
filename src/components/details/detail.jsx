@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {observer} from "mobx-react";
 import {useParams} from "react-router-dom";
 import {useNavigate} from "react-router-dom";
@@ -8,10 +8,14 @@ import "./detail.scss";
 import AddCar from "../addCar/addCar";
 import EditCar from "../editCar/editCar";
 import BackCarPhoto from "../../assets/car-another-min.jpg";
+import SuccesfulyAddCar from "../sucesfuly-add-car/suc.add.car";
 
 const CarDetails = observer(() => {
   const {id} = useParams();
   const navigate = useNavigate();
+  const [isVisible, setIsVisible] = useState(false);
+  const [carIdToDelete, setCarIdToDelete] = useState(null);
+  const {isSucces} = carStore;
   useEffect(() => {
     if (!authStore.isLoggedIn) {
       navigate("/");
@@ -33,8 +37,17 @@ const CarDetails = observer(() => {
   const car = carStore.filteredCars.find((car) => car.id === id);
 
   const handleDelete = (carId) => {
-    const brand = car.title.toLowerCase();
-    carStore.deleteCar(brand, carId);
+    setIsVisible(true);
+    setCarIdToDelete(carId);
+  };
+
+  const handleAction = (accepted) => {
+    setIsVisible(false);
+    if (accepted && carIdToDelete) {
+      const brand = car.title.toLowerCase();
+      carStore.deleteCar(brand, carIdToDelete);
+    }
+    setCarIdToDelete(null);
   };
 
   if (!car) {
@@ -78,6 +91,18 @@ const CarDetails = observer(() => {
         <option value="model">Sort by Model</option>
         <option value="classe">Sort by Classe</option>
       </select>
+      {isSucces && <SuccesfulyAddCar />}
+      {isVisible && (
+        <div className="del-accept-container">
+          <span>Are you sure you want to delete this car ?</span>
+          <button className="myButton" onClick={() => handleAction(true)}>
+            Accept
+          </button>
+          <button className="myButton" onClick={() => handleAction(false)}>
+            Decline
+          </button>
+        </div>
+      )}
       <div className="car-container">
         {filteredModels.map((model) => (
           <div className={`model-box model-box-${model.id}`} key={model.id}>

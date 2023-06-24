@@ -17,6 +17,7 @@ class CarStore {
   currentSlot = 0;
   car = null;
   sortOption = "";
+  isSuccess = false;
 
   constructor() {
     makeAutoObservable(this);
@@ -47,6 +48,13 @@ class CarStore {
       console.log("Error fetching car data:", error);
     }
   };
+
+  showSuccess() {
+    this.isSucces = true;
+  }
+  closeSuccess() {
+    this.isSucces = false;
+  }
 
   fetchCarDetails = async (carId) => {
     try {

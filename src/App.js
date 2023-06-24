@@ -16,9 +16,7 @@ const App = observer(() => {
 
   return (
     <Router>
-      {isLoggedIn &&
-        currentUser !== null &&
-        window.location.pathname !== "/" && <UserForm />}
+      {isLoggedIn && currentUser !== null && <UserForm />}
       <Routes>
         <Route path="/" element={<SignIn />} />
         <Route path="/home" element={<Home />} />

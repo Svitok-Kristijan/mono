@@ -6,6 +6,69 @@ body {
 .div-container {
   text-align: center;
   height: 100%;
+  .del-accept-container {
+    z-index: 999;
+    position: fixed;
+    width: 840px;
+    height: 400px;
+    background: rgb(246, 181, 181);
+    background: linear-gradient(
+      90deg,
+      rgba(246, 181, 181, 1) 0%,
+      rgba(255, 176, 165, 1) 23%,
+      rgba(254, 121, 124, 1) 59%,
+      rgba(255, 125, 105, 1) 100%
+    );
+    display: grid;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    top: 30%;
+    outline: 6px double rgba(255, 109, 109, 0.876);
+    outline-offset: 0px;
+    border-radius: 700px 20px 750px;
+    text-align: center;
+    align-content: space-around;
+    justify-content: center;
+    justify-items: center;
+    span {
+      color: rgb(251, 251, 251);
+      margin-top: 43px;
+      margin-left: 50px;
+      font-family: Arial;
+      font-weight: bold;
+      font-size: 38px;
+      text-shadow: #dcdcdc 3px 5px 5px;
+      transform: rotate(-10deg);
+    }
+
+    .myButton {
+      box-shadow: 3px 5px 7px 4px #8a2a21;
+      background: linear-gradient(to bottom, #c62d1f 5%, #ebdad9 100%);
+      background-color: #c62d1f;
+      border-radius: 24px;
+      border: 2px solid #d02718;
+      display: inline-block;
+      cursor: pointer;
+      color: #ffffff;
+      font-family: Arial;
+      font-size: 22px;
+      font-weight: bold;
+      font-style: italic;
+      padding: 17px 53px;
+      text-decoration: none;
+      text-shadow: 1px 3px 2px #810e05;
+      &:hover {
+        background: linear-gradient(to bottom, #ebdad9 5%, #c62d1f 100%);
+        background-color: #ebdad9;
+      }
+      &:active {
+        position: relative;
+        top: 1px;
+      }
+    }
+  }
 
   .img-responsive {
     position: absolute;
@@ -74,6 +137,7 @@ body {
       border: none;
       border-bottom: 1px solid gray;
       transition: all 0.6s;
+      border-radius: 20% 40% 30%;
       &:hover {
         background-color: rgb(255, 193, 193);
         transform: scale(1.08);

@@ -25,7 +25,11 @@ const AddCar = observer(() => {
       setModel("");
       setClasse("");
       setIsFormVisible(false);
-      alert("Successfully added car");
+      carStore.showSuccess();
+      setTimeout(() => {
+        carStore.closeSuccess();
+        carStore.fetchCarData();
+      }, 2000);
     } else {
       console.log("Error adding car: Brand not found");
     }

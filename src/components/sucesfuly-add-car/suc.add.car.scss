@@ -1,0 +1,22 @@
+.succesfuly-added {
+  background-color: rgba(177, 175, 175, 0.993);
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 40px;
+  outline: 6px double rgba(165, 165, 165, 0.876);
+  outline-offset: 0px;
+  text-shadow: 2px 2px 5px rgb(239, 239, 239);
+  box-shadow: 10px 10px 10px gray;
+  display: flex;
+  z-index: 99;
+  width: 700px;
+  height: 500px;
+  position: fixed;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  top: 30%;
+  border-radius: 50% 30% 60%;
+}
