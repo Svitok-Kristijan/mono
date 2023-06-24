@@ -42,7 +42,7 @@ const Home = observer(() => {
   return (
     <div className="home-container">
       <img className="background-car" src={CarPhoto} alt="car pic" />
-      {!authStore.isSignUp && <NewAccSucc />}
+      {authStore.isSignUp && <NewAccSucc />}
       <div className="car-list-container">
         <div
           className="car-list"
