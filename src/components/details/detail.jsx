@@ -98,7 +98,10 @@ const CarDetails = observer(() => {
           <button className="myButton" onClick={() => handleAction(true)}>
             Accept
           </button>
-          <button className="myButton" onClick={() => handleAction(false)}>
+          <button
+            className="myButton btn-second"
+            onClick={() => handleAction(false)}
+          >
             Decline
           </button>
         </div>

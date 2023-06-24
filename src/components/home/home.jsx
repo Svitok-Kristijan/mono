@@ -78,11 +78,11 @@ const Home = observer(() => {
       </div>
       <div className="slider-container">
         <button className="slider-button-left" onClick={handleSlideLeft}>
-          &lt;
+          &#171;
         </button>
         <p className="currentSlot">{currentSlot + 1}</p>
         <button className="slider-button-right" onClick={handleSlideRight}>
-          &gt;
+          &#187;
         </button>
       </div>
     </div>
