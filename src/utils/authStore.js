@@ -1,4 +1,4 @@
-import {makeAutoObservable} from "mobx";
+import {makeAutoObservable, runInAction} from "mobx";
 
 import "firebase/auth";
 import {
@@ -13,6 +13,7 @@ import {
 class AuthStore {
   isLoggedIn = false;
   currentUser = null;
+  isSignUp = false;
 
   constructor() {
     makeAutoObservable(this);
@@ -21,6 +22,16 @@ class AuthStore {
 
   async signInWithGoogle() {
     await signInWithGooglePopup();
+  }
+
+  SignUpHandler() {
+    this.isSignUp = true;
+    console.log("signup sucess");
+    setTimeout(() => {
+      runInAction(() => {
+        this.isSignUp = false;
+      });
+    }, 3000);
   }
 
   checkUserAuth() {

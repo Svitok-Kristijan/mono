@@ -1,10 +1,12 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {observer} from "mobx-react";
 import {useNavigate} from "react-router-dom";
 import CarPhoto from "../../assets/car.jpg";
 import "./home.scss";
 import carStore from "../../utils/carStore";
 import authStore from "../../utils/authStore";
+import NewAccSucc from "../auth/signUp/new-acc/new.acc";
+
 //import {addCollectionAndDocuments} from "../../utils/firebase.utils";
 //import CAR_DATA from "../../car-data";
 const Home = observer(() => {
@@ -20,6 +22,7 @@ const Home = observer(() => {
     currentSlot,
   } = carStore;
   const navigate = useNavigate();
+  const [isLogin, setIsLogin] = useState(false);
 
   useEffect(() => {
     fetchCarData();
@@ -39,6 +42,7 @@ const Home = observer(() => {
   return (
     <div className="home-container">
       <img className="background-car" src={CarPhoto} alt="car pic" />
+      {!authStore.isSignUp && <NewAccSucc />}
       <div className="car-list-container">
         <div
           className="car-list"

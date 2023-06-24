@@ -25,22 +25,12 @@ const SignUp = () => {
   };
   const navigate = useNavigate();
 
-  const resetFormFields = () => {
-    setFormFields(defaultFormFields);
-  };
-  const redirectHandle = () => {
-    setTimeout(() => {
-      navigate("/home");
-    }, 1560);
+  const signUpHandler = () => {
+    authStore.SignUpHandler();
   };
 
-  const loginHandler = () => {
-    setIsLogin(true);
-  };
-  const hideElement = () => {
-    setTimeout(() => {
-      setIsLogin(false);
-    }, 1550);
+  const resetFormFields = () => {
+    setFormFields(defaultFormFields);
   };
 
   const handleSubmit = async (event) => {
@@ -68,9 +58,7 @@ const SignUp = () => {
       console.error(error);
     }
     resetFormFields();
-    redirectHandle();
-    loginHandler();
-    hideElement();
+    signUpHandler();
   };
 
   const handleChange = (event) => {
@@ -81,7 +69,6 @@ const SignUp = () => {
   if (isVisible === true) {
     return (
       <div className="auth-container">
-        {isLogin && isVisible && <NewAccSucc />}
         <div className="sing-up-container">
           <h2>Create new account</h2>
           <span className="title-singup">
