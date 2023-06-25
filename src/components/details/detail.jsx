@@ -1,8 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {observer} from "mobx-react";
 import {useParams} from "react-router-dom";
-import {useNavigate} from "react-router-dom";
-import authStore from "../../utils/authStore";
 import carStore from "../../utils/carStore";
 import "./detail.scss";
 import AddCar from "../addCar/addCar";
@@ -12,15 +10,10 @@ import SuccesfulyAddCar from "../sucesfuly-add-car/suc.add.car";
 
 const CarDetails = observer(() => {
   const {id} = useParams();
-  const navigate = useNavigate();
+
   const [isVisible, setIsVisible] = useState(false);
   const [carIdToDelete, setCarIdToDelete] = useState(null);
   const {isSucces} = carStore;
-  useEffect(() => {
-    if (!authStore.isLoggedIn) {
-      navigate("/");
-    }
-  }, [authStore.isLoggedIn, navigate]);
 
   useEffect(() => {
     carStore.fetchCarData();

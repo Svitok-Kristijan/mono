@@ -17,7 +17,7 @@ class CarStore {
   currentSlot = 0;
   car = null;
   sortOption = "";
-  isSuccess = false;
+  isSucces = false;
 
   constructor() {
     makeAutoObservable(this);
@@ -26,10 +26,6 @@ class CarStore {
       () => this.searchQuery,
       () => this.filterCars()
     );
-  }
-
-  setCurrentSlot(slot) {
-    this.currentSlot = slot;
   }
 
   fetchCarData = async () => {
@@ -71,24 +67,6 @@ class CarStore {
 
   setSearchQuery = (query) => {
     this.searchQuery = query;
-  };
-
-  filterCars = () => {
-    const {searchQuery, cars} = this;
-    const lowerCaseQuery = searchQuery.toLowerCase();
-    const filteredCars = cars.filter((car) => {
-      const titleMatch = car.title.toLowerCase().includes(lowerCaseQuery);
-      const modelMatch = car.VehicleModel.some(
-        (model) =>
-          model.marke.toLowerCase().includes(lowerCaseQuery) ||
-          model.model.toLowerCase().includes(lowerCaseQuery) ||
-          model.classe.toLowerCase().includes(lowerCaseQuery)
-      );
-      return titleMatch || modelMatch;
-    });
-    runInAction(() => {
-      this.currentSlot = 0;
-    });
   };
 
   setCurrentSlot = (slot) => {
@@ -236,7 +214,6 @@ class CarStore {
             VehicleModel: updatedModels,
           });
 
-          // Update the local car object with the edited values
           const updatedCar = {
             ...existingModel,
             marke: editedCar.marke,
@@ -245,7 +222,7 @@ class CarStore {
           };
 
           console.log("Car updated successfully");
-          return updatedCar; // Return the updated car object
+          return updatedCar;
         } else {
           console.log("Error updating car: Model not found");
         }

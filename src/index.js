@@ -7,7 +7,7 @@ import reportWebVitals from "./reportWebVitals";
 
 authStore.isLoggedIn = false;
 authStore.currentUser = null;
-console.log(authStore.currentUser);
+
 ReactDOM.render(
   <React.StrictMode>
     <App />

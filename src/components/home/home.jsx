@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import {observer} from "mobx-react";
 import {useNavigate} from "react-router-dom";
 import CarPhoto from "../../assets/car.jpg";
@@ -12,9 +12,6 @@ import NewAccSucc from "../auth/signUp/new-acc/new.acc";
 const Home = observer(() => {
   const {
     filteredCars,
-    searchQuery,
-    setCurrentSlot,
-
     handleSlideLeft,
     handleSlideRight,
     fetchCarData,
@@ -22,17 +19,10 @@ const Home = observer(() => {
     currentSlot,
   } = carStore;
   const navigate = useNavigate();
-  const [isLogin, setIsLogin] = useState(false);
 
   useEffect(() => {
     fetchCarData();
   }, []);
-
-  useEffect(() => {
-    if (!authStore.isLoggedIn) {
-      navigate("/");
-    }
-  }, [authStore.isLoggedIn, navigate]);
 
   const openCarCard = async (car) => {
     await fetchCarDetails(car.id);
@@ -51,29 +41,25 @@ const Home = observer(() => {
             width: filteredCars ? `${filteredCars.length * 100}%` : "100%",
           }}
         >
-          {filteredCars && filteredCars.length > 0 ? (
-            filteredCars.map((car) => (
-              <div
-                className="car-card"
-                key={car.id}
-                onClick={() => openCarCard(car)}
-              >
-                <h2 className="car-card-title">{car.title}</h2>
-                <div className="model-details">
-                  {car.VehicleModel &&
-                    car.VehicleModel.map((model, modelIndex) => (
-                      <div className="model-box" key={modelIndex}>
-                        <h3>{model.marke}</h3>
-                        <p>Model: {model.model}</p>
-                        <p>Classe: {model.classe}</p>
-                      </div>
-                    ))}
-                </div>
+          {filteredCars.map((car) => (
+            <div
+              className="car-card"
+              key={car.id}
+              onClick={() => openCarCard(car)}
+            >
+              <h2 className="car-card-title">{car.title}</h2>
+              <div className="model-details">
+                {car.VehicleModel &&
+                  car.VehicleModel.map((model, modelIndex) => (
+                    <div className="model-box" key={modelIndex}>
+                      <h3>{model.marke}</h3>
+                      <p>Model: {model.model}</p>
+                      <p>Classe: {model.classe}</p>
+                    </div>
+                  ))}
               </div>
-            ))
-          ) : (
-            <p>No cars found</p>
-          )}
+            </div>
+          ))}
         </div>
       </div>
       <div className="slider-container">

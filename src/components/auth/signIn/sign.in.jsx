@@ -1,6 +1,6 @@
-import {useState, useEffect} from "react";
+import {useState} from "react";
 import "./sign.in.scss";
-import {signInWithGooglePopup} from "../../../utils/firebase.utils";
+
 import SignUp from "../signUp/sign.up";
 import {useNavigate} from "react-router-dom";
 import {observer} from "mobx-react-lite";
@@ -15,7 +15,6 @@ const SignIn = () => {
   const [formFields, setFormFields] = useState(defaultFormFieldsSignIn);
   const {email, password} = formFields;
   const navigate = useNavigate();
-  const {login} = authStore;
 
   const resetFormFields = () => {
     setFormFields(defaultFormFieldsSignIn);

@@ -1,5 +1,4 @@
 import {makeAutoObservable, runInAction} from "mobx";
-
 import "firebase/auth";
 import {
   createAuthUserWithEmailAndPassword,
@@ -26,7 +25,7 @@ class AuthStore {
 
   SignUpHandler() {
     this.isSignUp = true;
-    console.log("signup sucess");
+    console.log("signup success");
     setTimeout(() => {
       runInAction(() => {
         this.isSignUp = false;
@@ -38,30 +37,38 @@ class AuthStore {
     const persistedState = JSON.parse(localStorage.getItem("authState"));
 
     if (persistedState) {
-      this.isLoggedIn = persistedState.isLoggedIn;
-      this.currentUser = persistedState.currentUser;
+      runInAction(() => {
+        this.isLoggedIn = persistedState.isLoggedIn;
+        this.currentUser = persistedState.currentUser;
+      });
     } else {
-      this.isLoggedIn = false;
-      this.currentUser = null;
-      this.persistState();
-    }
-
-    onAuthStateChangedListener((user) => {
-      if (user) {
-        this.isLoggedIn = true;
-        this.currentUser = user;
-        this.persistState();
-      } else {
+      runInAction(() => {
         this.isLoggedIn = false;
         this.currentUser = null;
         this.persistState();
-      }
+      });
+    }
+
+    onAuthStateChangedListener((user) => {
+      runInAction(() => {
+        if (user) {
+          this.isLoggedIn = true;
+          this.currentUser = user;
+          this.persistState();
+        } else {
+          this.isLoggedIn = false;
+          this.currentUser = null;
+          this.persistState();
+        }
+      });
     });
   }
 
   async login(email, password) {
     await signInAuthUserWithEmailAndPassword(email, password);
-    this.persistState();
+    runInAction(() => {
+      this.persistState();
+    });
   }
 
   async signUpNew(displayName, email, password) {
@@ -82,9 +89,11 @@ class AuthStore {
 
   async logout() {
     await signOutUser();
-    this.isLoggedIn = false;
-    this.currentUser = null;
-    this.persistState();
+    runInAction(() => {
+      this.isLoggedIn = false;
+      this.currentUser = null;
+      this.persistState();
+    });
   }
 
   persistState() {

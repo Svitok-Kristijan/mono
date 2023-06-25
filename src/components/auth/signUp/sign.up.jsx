@@ -1,11 +1,8 @@
 import {useState} from "react";
 import "./sign.up.scss";
-
 import SignIn from "../signIn/sign.in";
 import {observer} from "mobx-react-lite";
 import authStore from "../../../utils/authStore";
-import {useNavigate} from "react-router-dom";
-import NewAccSucc from "./new-acc/new.acc";
 
 const defaultFormFields = {
   displayName: "",
@@ -18,12 +15,10 @@ const SignUp = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const {displayName, email, password, confirmPassword} = formFields;
   const [isVisible, setIsVisible] = useState(true);
-  const [isLogin, setIsLogin] = useState(false);
 
   const backClick = () => {
     setIsVisible(false);
   };
-  const navigate = useNavigate();
 
   const signUpHandler = () => {
     authStore.SignUpHandler();
