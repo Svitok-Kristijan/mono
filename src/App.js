@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -14,10 +14,20 @@ import UserForm from "./components/auth/user/user";
 
 const App = observer(() => {
   const {isLoggedIn, currentUser} = authStore;
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    authStore.checkUserAuth();
-  }, []);
+    const fetchData = async () => {
+      await authStore.checkUserAuth();
+      setIsLoading(false);
+    };
+
+    fetchData();
+  }, [authStore.checkUserAuth]);
+
+  if (isLoading) {
+    return <div className="loading">Loading...</div>;
+  }
 
   return (
     <Router>
@@ -32,6 +42,7 @@ const App = observer(() => {
         />
         <Route
           path="/home/car/:id"
+          caseSensitive={true}
           element={!isLoggedIn ? <Navigate to="/" /> : <CarDetails />}
         />
       </Routes>
