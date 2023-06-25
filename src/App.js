@@ -26,7 +26,7 @@ const App = observer(() => {
   }, [authStore.checkUserAuth]);
 
   if (isLoading) {
-    return <div className="loading">Loading...</div>;
+    return <div className="loading"></div>;
   }
 
   return (

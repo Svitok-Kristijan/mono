@@ -44,7 +44,7 @@ const CarDetails = observer(() => {
   };
 
   if (!car) {
-    return <div className="loading">Loading...</div>;
+    return <div className="loading"></div>;
   }
 
   const {title, VehicleModel} = car;
