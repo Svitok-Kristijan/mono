@@ -10,7 +10,9 @@ const EditCar = ({car, brand, onSave}) => {
   const handleSave = () => {
     onSave(editedCar, brand);
     setIsVisible(false);
-    carStore.fetchCarData();
+    setTimeout(() => {
+      carStore.fetchCarData();
+    }, 200);
   };
 
   const toggleVisibility = () => {
