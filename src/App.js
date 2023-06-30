@@ -18,7 +18,8 @@ const App = observer(() => {
 
   useEffect(() => {
     const fetchData = async () => {
-      await authStore.checkUserAuth();
+      authStore.checkUserAuth();
+
       setIsLoading(false);
     };
 

@@ -1,5 +1,6 @@
 import {makeAutoObservable, runInAction} from "mobx";
-import "firebase/auth";
+import {doc, getDoc} from "firebase/firestore";
+import {db} from "./firebase.utils";
 import {
   createAuthUserWithEmailAndPassword,
   signInAuthUserWithEmailAndPassword,
@@ -13,6 +14,7 @@ class AuthStore {
   isLoggedIn = false;
   currentUser = null;
   isSignUp = false;
+  displayNameValue = "";
 
   constructor() {
     makeAutoObservable(this);
@@ -25,7 +27,7 @@ class AuthStore {
 
   SignUpHandler() {
     this.isSignUp = true;
-    console.log("signup success");
+
     setTimeout(() => {
       runInAction(() => {
         this.isSignUp = false;
@@ -54,10 +56,12 @@ class AuthStore {
         if (user) {
           this.isLoggedIn = true;
           this.currentUser = user;
+          this.displayName();
           this.persistState();
         } else {
           this.isLoggedIn = false;
           this.currentUser = null;
+          this.displayNameValue = "";
           this.persistState();
         }
       });
@@ -67,8 +71,28 @@ class AuthStore {
   async login(email, password) {
     await signInAuthUserWithEmailAndPassword(email, password);
     runInAction(() => {
+      this.displayName();
       this.persistState();
     });
+  }
+
+  async displayName() {
+    const userId = this.currentUser?.uid;
+
+    if (userId) {
+      const userRef = doc(db, "users", userId);
+      const docSnapshot = await getDoc(userRef);
+
+      if (docSnapshot.exists()) {
+        const userData = docSnapshot.data();
+        if (userData && userData.hasOwnProperty("displayName")) {
+          const displayName = userData.displayName;
+          runInAction(() => {
+            this.displayNameValue = displayName;
+          });
+        }
+      }
+    }
   }
 
   async signUpNew(displayName, email, password) {
@@ -84,6 +108,9 @@ class AuthStore {
       await user.updateProfile({
         displayName: displayName,
       });
+      runInAction(() => {
+        this.displayName();
+      });
     }
   }
 
@@ -92,6 +119,7 @@ class AuthStore {
     runInAction(() => {
       this.isLoggedIn = false;
       this.currentUser = null;
+      this.displayNameValue = "";
       this.persistState();
     });
   }

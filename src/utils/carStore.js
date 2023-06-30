@@ -179,7 +179,6 @@ class CarStore {
 
         if (carDoc.exists()) {
           await deleteDoc(carDocRef);
-          console.log("Car deleted successfully");
         }
       }
     } catch (error) {}
@@ -221,7 +220,6 @@ class CarStore {
             classe: editedCar.classe,
           };
 
-          console.log("Car updated successfully");
           return updatedCar;
         } else {
           console.log("Error updating car: Model not found");
